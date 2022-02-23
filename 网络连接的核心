@@ -19,4 +19,4 @@ referer:告诉服务器来源哪里
 accept-encoding；浏览器申明自己可接受的编码方法
 
 情报收集，处理，确认 1,流程：情报收集-fofa,shadan,谷歌，bing-body,title,domain,cert,icp,icon,ip是否cdn 2,企业相关的信息收集：情报收集-企业相关信息-天眼查或爱企查-公司邮箱，备案信息，微信公众号，子公司
-
+通过qq钓鱼:情报收集-邮箱钓鱼-招投标，招聘，领英，百度  github信息泄露 情报收集-gitthub,gittee,网盘-公司号，网站报错信息，邮箱
