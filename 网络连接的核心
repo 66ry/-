@@ -27,3 +27,12 @@ accept-encoding；浏览器申明自己可接受的编码方法
 入口权限-内网搜集-免杀提权-抓取登入凭证-跨平台横向-入口维持-数据回传-定期权限维护
 情报收集流程
 总体流程 情报收集-情报处理-确认有效范围-收集有效范围的全部信息-分类-尝试快速进入内网的方式-快速定位可能存在的漏洞的问题点-测试所有程序
+google hacking符号
+1.-keyword强调结果不要出现此关键词
+*keyword 模糊搜索，强调结果出现该关键词
+"keyword"精准搜索
+2.site搜所指定域名的网页内容，搜索子域名和此域名相关的东西如site:zhihu.com
+3.filetype 搜素指定文件类型如 namp filetype:pdf/ppt
+4.inurl 搜索url网址存在特定关键字的网址 可以用来搜索有注入点的网站 如：inurl:php?id= 搜索中含有”php?id“的网页i，inurl:/admin/login.php 搜索网址中有"/admin/login.php"
+5.intitle 搜索标题存在的关键字的网页 如intile：后台登入 ，intitle:后台管理 inurl:php搜索标题”后台管理“的php页面，intitle:index of "keyword"搜索关键字相关的索引目录信息 ，intitle:index of "admain"搜索后台的页面信息
+6.intext 搜索正文存在特定关键字的网页 如intexta:powered by discuz
