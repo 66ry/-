@@ -36,3 +36,7 @@ google hacking符号
 4.inurl 搜索url网址存在特定关键字的网址 可以用来搜索有注入点的网站 如：inurl:php?id= 搜索中含有”php?id“的网页i，inurl:/admin/login.php 搜索网址中有"/admin/login.php"
 5.intitle 搜索标题存在的关键字的网页 如intile：后台登入 ，intitle:后台管理 inurl:php搜索标题”后台管理“的php页面，intitle:index of "keyword"搜索关键字相关的索引目录信息 ，intitle:index of "admain"搜索后台的页面信息
 6.intext 搜索正文存在特定关键字的网页 如intexta:powered by discuz
+域名的区分
+一级域名也叫顶级域名（机构类）:.com .org .net  (地区名也属于顶级域名).cn .jp
+二级域名：baidx.com 等  三级域名=主机名www.baixi.conm等
+
