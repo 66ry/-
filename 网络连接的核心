@@ -50,4 +50,58 @@ DVWAsqlmap简化利用工具如sqlmap.py
 如 python sqlmap.py -u "url#" --cookie=""
 -u:url的地址，需要啊检测的网址
 --cookie：因为dvwa登入，在浏览器控制台里查看请求消息头获取cookie
+第二步：获取数据库名
+--dbs:database server获取所有数据库名
+第三步：获取指定数据库表
+-D：database指定想要获取的数据库名为dvwa
+--tables：列出数据库表
+第四步：获取指定数据库列/表项
+-T：table指定获取的表名
+--columns:列出表项/列
+第五步：获取数据
+--dump读取数据
+sql注入的防御medium
+ $id = $_POST[ 'id' ]; 将输入的内容赋值给变量$target
+ 
+    $id = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $id); 转移特殊的字符\x00 ,\n,\r,\',\x1a
+     $query  = "SELECT first_name, last_name FROM users WHERE user_id = $id;"; 执行sql语句
+     避免特殊字符的存在将‘dvwa’替换为database() 如1 union select table_name,table_schema from information_schema.tables where table_schema=database()#;
+     sql 防御high
+     <?php
+
+if( isset( $_SESSION [ 'id' ] ) ) {
+    // Get input
+    $id = $_SESSION[ 'id' ];内容赋值给￥target DVWA high防御中缺少传入数据的过滤，无法防御注入漏洞
+
+    switch ($_DVWA['SQLI_DB']) {
+        case MYSQL:
+            // Check database
+            $query  = "SELECT first_name, last_name FROM users WHERE user_id = '$id' LIMIT 1;"; 执行sql语句，在sql语句最后添加了限制
+    SQL防御impossible
+    <?php
+
+if( isset( $_GET[ 'Submit' ] ) ) {
+    // Check Anti-CSRF token
+    checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+
+    // Get input
+    $id = $_GET[ 'id' ];将输入的内容赋值给变量$target
+
+    // Was a number entered?
+    if(is_numeric( $id )) {这里做了后端格式验证，具体分析   
+        $id = intval ($id);
+        switch ($_DVWA['SQLI_DB']) {
+            case MYSQL:
+                // Check the database 做了sql预处理 ，pdo PDO：php data object 配合正确的过滤和sql语句能避免sql注入
+                $data = $db->prepare( 'SELECT first_name, last_name FROM users WHERE user_id = (:id) LIMIT 1;' );
+                $data->bindParam( ':id', $id, PDO::PARAM_INT );
+                $data->execute();
+                $row = $data->fetch(); 
+                1.is_numeric判断用户输入的是不是数字
+                2.intval 获取用户输入的数字内容
+                3.prepare 进行sql语句预处理
+                4.bindparam 绑定输入参数，并再次指定为整型
+                impossible的三次验证加PDO预处理，完全解决了sql注入隐患，其他后端语言也可实现相应语法
+     
+     
 
