@@ -1,2 +1,4 @@
-启动mysql
-show databases查询检查下数据库，在库中使用的数据库 use security 查看下这个数据库中有哪些表 show tables ,查看下这张表的结构 desc emails
+show databases;查询检查一下数据库
+选择information_schema来执行命令 use information_schema;
+查看一下这个数据库有哪些表 show tables;
+再枚举这个表 desc tables;
