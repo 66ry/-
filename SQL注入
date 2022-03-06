@@ -2,3 +2,5 @@ show databases;查询检查一下数据库
 选择information_schema来执行命令 use information_schema;
 查看一下这个数据库有哪些表 show tables;
 再枚举这个表 desc tables;
+SQL注入类型：数字和字符型 表中存在id字段的才可以使用，通过url中修改对应的id值为正常数字，大数字，字符（单双引号，双单引号，括号），反斜杠\探测url是否存在注入点
+1-4基于报错的sql注入
