@@ -109,3 +109,10 @@ eval中的参数：$_request['shell']$,request请求，而_request就是从请�
 pHp中文件包含函数有四种分别是：1.include如果包含文件中错误，报错后程序继续执行2.rquire如果包含文件错误，报错后程序直接退出3.include_once,require_once这两个函数功能相同，附加功能是
 确保包含文件只被执行一次，网页中的红色警告：the php function allow_url _include is not enable  表示php函数allow_url _include没有启用，这个函数可以在php配置文件（php.ini）
 中修改，党参数为on，可以对远程文件包含，可以任意包含其他服务器的文件，包含本地文件不需要
+.htaccess攻击
+.htaccess文件时apache的配置文件，通过上传该文件可以修改apache配置，将png文件当成php文件执行，文件名中只要包含php关键字，就当作php执行，匹配文件时当作php脚本执行
+服务器检测--MIME类型
+上传文件时抓包，修改数据包的MIME类型（即修改content-type），服务器端检测--文件内容 制作图片木马
+00截断（00既null,空）在http头save_path后的路经里加如%00达到阶段的目的
+服务器在检查上传的后缀时
+1.php.png从后往前检查,但apache是从左到右
